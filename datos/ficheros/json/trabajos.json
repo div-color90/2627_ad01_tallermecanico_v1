@@ -40,5 +40,7 @@
     "modelo" : "eSprinter",
     "matricula" : "3333DDD"
   },
-  "fechaInicio" : "2025-11-02"
+  "fechaInicio" : "2025-11-02",
+  "fechaFin" : "2026-11-12",
+  "horas" : 10
 } ]
