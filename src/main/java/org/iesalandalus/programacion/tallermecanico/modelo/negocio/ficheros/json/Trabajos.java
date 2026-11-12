@@ -10,12 +10,14 @@ import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.*;
 
 public class Trabajos implements ITrabajos {
     private static final String FICHERO_TRABAJOS = String.format("%s%s%s%s%s%s%s", "datos", File.separator, "ficheros", File.separator, "json", File.separator, "trabajos.json");
-    private static final TypeReference<List<Trabajo>> TIPO_LISTA_TRABAJOS = new TypeReference<>() {};
+    private static final TypeReference<List<Trabajo>> TIPO_LISTA_TRABAJOS = new TypeReference<>() {
+    };
 
     private static Trabajos instancia;
     private final ObjectMapper mapper;
@@ -59,9 +61,7 @@ public class Trabajos implements ITrabajos {
     private void escribir(List<Trabajo> trabajos) {
         File fichero = new File(FICHERO_TRABAJOS);
         try {
-            if (fichero.getParentFile() != null) {
-                fichero.getParentFile().mkdirs();
-            }
+            Files.createDirectories(fichero.toPath().getParent());
             mapper.writerFor(TIPO_LISTA_TRABAJOS).withDefaultPrettyPrinter().writeValue(fichero, trabajos);
         } catch (IOException e) {
             System.out.printf("Error al escribir el fichero %s: %s%n", FICHERO_TRABAJOS, e.getMessage());

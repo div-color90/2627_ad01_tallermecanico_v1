@@ -8,6 +8,7 @@ import org.iesalandalus.programacion.tallermecanico.modelo.negocio.IVehiculos;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,12 +33,12 @@ public class Vehiculos implements IVehiculos {
 
     @Override
     public void comenzar() {
-        // Vacío: los datos se leen cuando el usuario los solicita.
+
     }
 
     @Override
     public void terminar() {
-        // Vacío: los datos se escriben cada vez que hay una modificación.
+
     }
 
     private List<Vehiculo> leer() {
@@ -45,7 +46,8 @@ public class Vehiculos implements IVehiculos {
         File fichero = new File(FICHERO_VEHICULOS);
         if (fichero.exists()) {
             try {
-                vehiculos = mapper.readValue(fichero, new TypeReference<List<Vehiculo>>() {});
+                vehiculos = mapper.readValue(fichero, new TypeReference<>() {
+                });
             } catch (IOException e) {
                 System.out.printf("Error al leer el fichero %s: %s%n", FICHERO_VEHICULOS, e.getMessage());
             }
@@ -56,9 +58,7 @@ public class Vehiculos implements IVehiculos {
     private void escribir(List<Vehiculo> vehiculos) {
         File fichero = new File(FICHERO_VEHICULOS);
         try {
-            if (fichero.getParentFile() != null) {
-                fichero.getParentFile().mkdirs();
-            }
+            Files.createDirectories(fichero.toPath().getParent());
             mapper.writerWithDefaultPrettyPrinter().writeValue(fichero, vehiculos);
         } catch (IOException e) {
             System.out.printf("Error al escribir el fichero %s: %s%n", FICHERO_VEHICULOS, e.getMessage());
