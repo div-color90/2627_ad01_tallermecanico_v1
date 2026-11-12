@@ -10,7 +10,7 @@ public class FuenteDatosFicherosJSON implements IFuenteDatos {
 
     @Override
     public IClientes crearClientes() {
-      return Clientes.getInstancia();
+        return Clientes.getInstancia();
     }
 
     @Override

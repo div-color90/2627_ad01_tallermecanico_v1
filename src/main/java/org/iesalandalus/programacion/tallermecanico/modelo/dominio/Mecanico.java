@@ -25,8 +25,8 @@ public class Mecanico extends Trabajo {
 
     public float getPrecioMaterial() { return precioMaterial; }
     public void anadirPrecioMaterial(float precioMaterial) throws TallerMecanicoExcepcion {
-        if (precioMaterial <= 0) throw new IllegalArgumentException("El precio del material debe ser mayor que cero.");
-        if (estaCerrado()) throw new TallerMecanicoExcepcion("Trabajo cerrado.");
+        if (precioMaterial <= 0) throw new IllegalArgumentException("El precio del material a añadir debe ser mayor que cero.");
+        if (estaCerrado()) throw new TallerMecanicoExcepcion("No se puede añadir precio del material, ya que el trabajo mecánico está cerrado.");
         this.precioMaterial += precioMaterial;
     }
 

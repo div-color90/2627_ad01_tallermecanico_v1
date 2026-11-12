@@ -33,7 +33,8 @@ public abstract class Trabajo {
     private LocalDate fechaFin;
     private int horas;
 
-    protected Trabajo(){}
+    protected Trabajo() {
+    }
 
     protected Trabajo(Cliente cliente, Vehiculo vehiculo, LocalDate fechaInicio) {
         setCliente(cliente);
@@ -150,6 +151,7 @@ public abstract class Trabajo {
     private float getDias() {
         return (estaCerrado()) ? (int) ChronoUnit.DAYS.between(fechaInicio, fechaFin) : 0;
     }
+
     @JsonIgnore
     public abstract float getPrecioEspecifico();
 
