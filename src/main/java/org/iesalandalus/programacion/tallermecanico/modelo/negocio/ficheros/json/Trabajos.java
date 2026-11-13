@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.iesalandalus.programacion.tallermecanico.modelo.TallerMecanicoExcepcion;
 import org.iesalandalus.programacion.tallermecanico.modelo.dominio.*;
 import org.iesalandalus.programacion.tallermecanico.modelo.negocio.ITrabajos;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,12 +21,18 @@ public class Trabajos implements ITrabajos {
     };
 
     private static Trabajos instancia;
-    private final ObjectMapper mapper;
+    private static final ObjectMapper mapper = new ObjectMapper();
+    static {
+        // Configuración global del mapper.
+        mapper.registerModule(new JavaTimeModule());
+        // Escribe las fechas como texto.
+        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        mapper.findAndRegisterModules();
+        // No escribe valores nulos ni ceros (fechaFin, horas, precioMaterial).
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT);
+    }
 
     private Trabajos() {
-        mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT);
     }
 
     static Trabajos getInstancia() {
